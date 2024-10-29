@@ -4,18 +4,16 @@ const WidgetContainer = styled.div`
   display: grid;
   grid-gap: ${({ gap }) => gap}px;
 `;
+
 const WidgetRowContainer = styled(WidgetContainer)`
-  grid-template-rows: repeat(${({ major }) => major}, ${({ size }) => size}px);
-  grid-auto-columns: ${({ size }) => size}px;
+  grid-template-rows: repeat(${({ major }) => major}, ${({ sy }) => sy}px);
+  grid-auto-columns: ${({ sx }) => sx}px;
   grid-auto-flow: column;
 `;
 
 const WidgetColumnContainer = styled(WidgetContainer)`
-  grid-template-columns: repeat(
-    ${({ major }) => major},
-    ${({ size }) => size}px
-  );
-  grid-auto-rows: ${({ size }) => size}px;
+  grid-template-columns: repeat(${({ major }) => major}, ${({ sx }) => sx}px);
+  grid-auto-rows: ${({ sy }) => sy}px;
   grid-auto-flow: row;
 `;
 
@@ -44,17 +42,20 @@ const DebugWidget = styled(Widget)`
   }
 `;
 
-function useWidget({ major, size, gap, direction, debug }) {
+function useWidget({ major, sx, sy, gap, direction, debug }) {
   const $WidgetContainer =
     direction === 'row' ? WidgetRowContainer : WidgetColumnContainer;
   const $Widget = debug ? DebugWidget : Widget;
+
+  console.log(sx, sy);
 
   return {
     WidgetContainer: ({ ...props }) => {
       return (
         <$WidgetContainer
           major={major}
-          size={size}
+          sx={sx}
+          sy={sy}
           gap={gap}
           {...props}
         ></$WidgetContainer>
@@ -63,8 +64,8 @@ function useWidget({ major, size, gap, direction, debug }) {
     Widget: ({ ...props }) => {
       return <$Widget {...props}></$Widget>;
     },
-    getSize: (sx, sy) => {
-      return [sx * size + gap * (sx - 1), sy * size + gap * (sy - 1)];
+    getSize: ($sx, $sy) => {
+      return [$sx * sx + gap * ($sx - 1), $sy * sy + gap * ($sy - 1)];
     },
   };
 }
