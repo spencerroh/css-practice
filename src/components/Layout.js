@@ -4,6 +4,7 @@ import tw from 'tailwind-styled-components';
 import Home from '../pages/Home';
 import MusicAlbum from '../pages/MusicAlbum';
 import Widget from '../pages/Widget';
+import { RecoilTest } from '../pages/RecoilTest';
 
 const Container = tw.div`
     fixed
@@ -50,12 +51,14 @@ class Layout extends Component {
             <Subtitle>PRACTICES</Subtitle>
             <Menu to='/malbum'>Music Album</Menu>
             <Menu to='/widget'>Widget</Menu>
+            <Menu to='/recoil'>Recoil</Menu>
           </Menus>
           <Main>
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/malbum' element={<MusicAlbum />} />
               <Route path='/widget' element={<Widget />} />
+              <Route path='/recoil' element={<RecoilTest />} />
               <Route path='*' element={<Home />} />
             </Routes>
           </Main>
